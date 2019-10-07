@@ -31,6 +31,7 @@ import android.text.TextUtils;
 
 import com.leanplum.ActionContext.ContextualValues;
 import com.leanplum.callbacks.ActionCallback;
+import com.leanplum.callbacks.EmbeddedHTMLUrlCallback;
 import com.leanplum.callbacks.MessageDisplayedCallback;
 import com.leanplum.callbacks.RegisterDeviceCallback;
 import com.leanplum.callbacks.RegisterDeviceFinishedCallback;
@@ -98,6 +99,12 @@ public class Leanplum {
       new ArrayList<>();
   private static final ArrayList<MessageDisplayedCallback> messageDisplayedHandlers =
           new ArrayList<>();
+  private static EmbeddedHTMLUrlCallback embeddedHTMLUrlHandler = new EmbeddedHTMLUrlCallback() {
+    @Override
+    public boolean onEmbeddedUrl(Context context, String url) {
+      return false;
+    }
+  };
   private static final Object heartbeatLock = new Object();
   private static final String LEANPLUM_NOTIFICATION_CHANNEL =
       "com.leanplum.LeanplumNotificationChannel";
@@ -1360,6 +1367,35 @@ public class Leanplum {
     Date deliveryDateTime = new Date();
 
     return new MessageArchiveData(messageID, messageBody, recipientUserID, deliveryDateTime);
+  }
+
+  /**
+   *  Sets the Embedded URL handler
+   */
+  public static void setEmbeddedURLHandler(EmbeddedHTMLUrlCallback handler){
+    embeddedHTMLUrlHandler = handler;
+  }
+
+  /**
+   *  Gets the current implementation for Embedded URL Handler
+   */
+  public static EmbeddedHTMLUrlCallback getEmbeddedURLHandler()
+  {
+    return embeddedHTMLUrlHandler;
+  }
+
+  /**
+   * Removes current implementation for Embedded URL handler
+   * and creates a new handler with default values
+   */
+  public static void removeEmbeddedURLHandler()
+  {
+    embeddedHTMLUrlHandler = new EmbeddedHTMLUrlCallback() {
+      @Override
+      public boolean onEmbeddedUrl(Context context, String url) {
+        return false;
+      }
+    };
   }
 
   @VisibleForTesting
