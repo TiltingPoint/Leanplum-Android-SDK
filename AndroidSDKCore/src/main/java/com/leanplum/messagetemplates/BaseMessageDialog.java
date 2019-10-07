@@ -523,6 +523,11 @@ public class BaseMessageDialog extends Dialog {
       @SuppressWarnings("deprecation")
       @Override
       public boolean shouldOverrideUrlLoading(WebView wView, String url) {
+
+        // Check for an Embedded Url Custom Action
+        if(Leanplum.getEmbeddedURLHandler().onEmbeddedUrl(wView.getContext(), url))
+          return true;
+
         // Open URL event.
         if (url.contains(htmlOptions.getOpenUrl())) {
           dialogView.setVisibility(View.VISIBLE);
@@ -595,6 +600,17 @@ public class BaseMessageDialog extends Dialog {
     webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
 
     return webView;
+  }
+
+  /**
+   * We would like to have the option to disable / Enable
+   * the back button press to dismiss messages
+   * added this for our current needs - Tilting Point
+   */
+  @Override
+  public void onBackPressed() {
+    if(!isHtml)
+      super.onBackPressed();
   }
 
   /**
