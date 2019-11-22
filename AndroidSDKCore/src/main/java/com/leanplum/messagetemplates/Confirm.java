@@ -71,13 +71,15 @@ class Confirm {
                     .setPositiveButton(context.stringNamed(Args.ACCEPT_TEXT),
                         new DialogInterface.OnClickListener() {
                           public void onClick(DialogInterface dialog, int id) {
-                            context.runTrackedActionNamed(Args.ACCEPT_ACTION);
+                              Leanplum.triggerMessageClosed();
+                              context.runTrackedActionNamed(Args.ACCEPT_ACTION);
                           }
                         })
                     .setNegativeButton(context.stringNamed(Args.CANCEL_TEXT),
                         new DialogInterface.OnClickListener() {
                           public void onClick(DialogInterface dialog, int id) {
-                            context.runActionNamed(Args.CANCEL_ACTION);
+                              Leanplum.triggerMessageClosed();
+                              context.runActionNamed(Args.CANCEL_ACTION);
                           }
                         });
                 AlertDialog alertDialog = alertDialogBuilder.create();
