@@ -36,11 +36,13 @@ public class WebInterstitialOptions {
   private String url;
   private String closeUrl;
   private boolean hasDismissButton;
+  private ActionContext context;
 
   public WebInterstitialOptions(ActionContext context) {
     this.setUrl(context.stringNamed(Args.URL));
     this.setHasDismissButton(context.booleanNamed(Args.HAS_DISMISS_BUTTON));
     this.setCloseUrl(context.stringNamed(Args.CLOSE_URL));
+    this.setContext(context);
   }
 
   public String getUrl() {
@@ -49,6 +51,10 @@ public class WebInterstitialOptions {
 
   private void setUrl(String url) {
     this.url = url;
+  }
+
+  private void setContext(ActionContext context) {
+    this.context = context;
   }
 
   public boolean hasDismissButton() {
@@ -72,5 +78,9 @@ public class WebInterstitialOptions {
         .with(Args.URL, Values.DEFAULT_URL)
         .with(Args.CLOSE_URL, Values.DEFAULT_CLOSE_URL)
         .with(Args.HAS_DISMISS_BUTTON, Values.DEFAULT_HAS_DISMISS_BUTTON);
+  }
+
+  public ActionContext getActionContext() {
+    return this.context;
   }
 }

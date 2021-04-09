@@ -46,7 +46,7 @@ abstract class AbstractPopupController extends BaseController {
   protected BaseMessageOptions options;
 
   protected AbstractPopupController(Activity activity, BaseMessageOptions options) {
-    super(activity);
+    super(activity, options.getActionContext());
     this.options = options;
 
     init();

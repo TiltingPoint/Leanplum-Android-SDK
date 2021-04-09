@@ -30,6 +30,9 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.VisibleForTesting;
+
+import com.leanplum.ActionContext;
+import com.leanplum.Leanplum;
 import com.leanplum.core.R;
 import com.leanplum.utils.SizeUtil;
 import com.leanplum.views.CloseButton;
@@ -43,12 +46,14 @@ import com.leanplum.views.ViewUtils;
 abstract class BaseController extends Dialog {
   protected RelativeLayout contentView;
   protected Activity activity;
+  protected ActionContext context;
 
   protected boolean isClosing = false;
 
-  protected BaseController(Activity activity) {
+  protected BaseController(Activity activity, ActionContext context) {
     super(activity, ViewUtils.getThemeId(activity));
     this.activity = activity;
+    this.context = context;
     SizeUtil.init(activity);
   }
 
@@ -117,6 +122,8 @@ abstract class BaseController extends Dialog {
     if (isClosing) {
       return;
     }
+    if(context != null)
+      Leanplum.triggerMessageClosed(context);
     isClosing = true;
     Animation animation = ViewUtils.createFadeOutAnimation(350);
     animation.setAnimationListener(new Animation.AnimationListener() {
