@@ -59,8 +59,13 @@ public class OpenUrlAction implements MessageTemplate {
     List<ResolveInfo> resolveInfoList =
         context.getPackageManager().queryIntentActivities(uriIntent, 0);
 
+    
+    // Info list comes empty preventing OpenUrl action to work
+    // TODO: Figure out whats interfering with this.
+    /*
     if (resolveInfoList.isEmpty())
       return;
+    */
 
     // If url can be handled by current app - set package name to intent, so url
     // will be open by current app. Skip chooser dialog.

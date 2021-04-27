@@ -26,8 +26,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+
 import com.leanplum.ActionArgs;
 import com.leanplum.ActionContext;
+import com.leanplum.Leanplum;
 import com.leanplum.LeanplumActivityHelper;
 import com.leanplum.internal.Util;
 import com.leanplum.messagetemplates.MessageTemplate;
@@ -71,7 +73,10 @@ public class AlertMessage implements MessageTemplate {
         .setCancelable(false)
         .setPositiveButton(
             context.stringNamed(Args.DISMISS_TEXT),
-            (dialog, id) -> context.runActionNamed(Args.DISMISS_ACTION))
+            (dialog, id) -> {
+              Leanplum.triggerMessageClosed(context);
+              context.runActionNamed(Args.DISMISS_ACTION);
+            })
         .create()
         .show();
   }

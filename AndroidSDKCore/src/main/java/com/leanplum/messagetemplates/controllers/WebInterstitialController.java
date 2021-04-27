@@ -43,7 +43,7 @@ public class WebInterstitialController extends BaseController {
   private @NonNull WebInterstitialOptions webOptions;
 
   public WebInterstitialController(Activity activity, @NonNull WebInterstitialOptions options) {
-    super(activity);
+    super(activity, options.getActionContext());
     this.webOptions = options;
 
     init();
@@ -78,6 +78,7 @@ public class WebInterstitialController extends BaseController {
   }
 
   private WebView createWebView(Context context) {
+
     WebView view = new WebView(context);
     view.setLayoutParams(
         new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));

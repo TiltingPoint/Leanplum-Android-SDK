@@ -29,6 +29,7 @@ import android.util.Log;
 
 import com.leanplum.ActionArgs;
 import com.leanplum.ActionContext;
+import com.leanplum.Leanplum;
 import com.leanplum.internal.Util;
 import com.leanplum.messagetemplates.MessageTemplateConstants.Args;
 import com.leanplum.messagetemplates.MessageTemplateConstants.Values;
@@ -154,6 +155,7 @@ public abstract class BaseMessageOptions {
   }
 
   public void accept() {
+    Leanplum.triggerMessageClosed(context);
     context.runTrackedActionNamed(Args.ACCEPT_ACTION);
   }
 

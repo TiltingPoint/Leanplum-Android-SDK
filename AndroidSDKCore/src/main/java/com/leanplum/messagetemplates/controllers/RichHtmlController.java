@@ -61,7 +61,7 @@ public class RichHtmlController extends BaseController {
   RichHtmlOptions richOptions;
 
   public RichHtmlController(Activity activity, @NonNull RichHtmlOptions richOptions) {
-    super(activity);
+    super(activity, richOptions.getActionContext());
     this.richOptions = richOptions;
 
     init();
